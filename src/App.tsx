@@ -1,23 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Routes } from "./routes";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="text-sm font-extrabold text-red-400"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+  return <Routes isAuthorized={true} />;
+};
 
 export default App;

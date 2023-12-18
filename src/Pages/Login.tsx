@@ -1,24 +1,75 @@
+import React from "react";
+import { ZodType, z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { postWithoutToken, ResponseType } from "../Utils/request-axios";
+
+type formData = {
+  UserName: string;
+  Password: string;
+};
+
+interface LoginResponse {
+  expiration: string;
+  token: string;
+}
+
 const Login = () => {
+  const schema: ZodType<formData> = z.object({
+    UserName: z.string(),
+    Password: z.string().min(3).max(100),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<formData>({
+    resolver: zodResolver(schema),
+  });
+
+  const handleLogin = async (data: formData) => {
+    try {
+      const response: ResponseType = await postWithoutToken(
+        "Authentication/login",
+        data
+      );
+      if (response?.statusText === "OK") {
+        let resp = response?.data as LoginResponse;
+        localStorage.setItem("authExpiration", resp?.expiration);
+        localStorage.setItem("authTocken", resp?.token);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="w-96 p-6 shadow-lg bg-white rounded-md">
       <h1 className="text-sky-700 text-3xl block text-center font-semibold">
         Login
       </h1>
       <hr className="mt-3" />
-      <form method="post">
+      <form method="post" onSubmit={handleSubmit(handleLogin)}>
         <div className="mt-3">
-          <label htmlFor="Email" className="block text-sm mb-2">
+          <label htmlFor="email" className="block text-sm mb-2">
             Email
           </label>
           <input
             type="text"
+            id="email"
             className="border w-full text-sm px-2 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-md"
             placeholder="Enter Email..."
+            {...register("UserName")}
           />
-          <span className="text-xs text-red-500"></span>
+          {errors.UserName && (
+            <span className="text-xs text-red-500">
+              {errors.UserName.message}
+            </span>
+          )}
         </div>
         <div className="mt-3">
-          <label htmlFor="Password" className="block text-sm mb-2">
+          <label htmlFor="password" className="block text-sm mb-2">
             Password
           </label>
           <input
@@ -26,8 +77,13 @@ const Login = () => {
             id="password"
             className="border w-full text-sm px-2 py-2 focus:outline-none focus:ring-0 focus:border-gray-600 rounded-md"
             placeholder="Enter Password..."
+            {...register("Password")}
           />
-          <span className="text-xs text-red-500"></span>
+          {errors.Password && (
+            <span className="text-xs text-red-500">
+              {errors.Password.message}
+            </span>
+          )}
         </div>
         <div className="flex justify-between mt-3">
           <div className="flex items-center gap-1">

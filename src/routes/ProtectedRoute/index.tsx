@@ -1,12 +1,12 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
   isAuthorized: boolean;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ isAuthorized }) => {
-  return isAuthorized ? <Outlet /> : <Navigate to="/login" />;
+  return isAuthorized ? <Navigate to="/home" /> : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;

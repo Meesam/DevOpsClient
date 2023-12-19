@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Routes } from "./routes";
 import { useStore } from "./store";
 
@@ -10,11 +10,9 @@ const App = () => {
     if (token === "" || token === undefined) {
       getToken();
     }
-  }, [token]);
+  }, [token, getToken]);
 
-  console.log("mytoken ", token);
-
-  return <Routes isAuthorized={true} />;
+  return <Routes isAuthorized={token != "" && token != null} />;
 };
 
 export default App;

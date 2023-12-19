@@ -9,57 +9,65 @@ import ListUsers from "../Pages/ListUsers";
 import { renderRoutes } from "./generate-routes";
 
 export const routes = [
-{
+  {
     layout: UnAuthLayout,
     routes: [
       {
-        name: 'login',
-        title: 'Login page',
+        name: "login",
+        title: "Login page",
         component: Login,
-        path: '/login',
+        path: "/login",
         isPublic: true,
+        layout: UnAuthLayout,
       },
       {
-        name: 'login',
-        title: 'Login page',
+        name: "login",
+        title: "Login page",
         component: Login,
-        path: '/',
+        path: "/",
         isPublic: true,
-      }
-    ]
+        layout: UnAuthLayout,
+      },
+    ],
   },
-{
+  {
     layout: AuthLayout,
     routes: [
       {
-        name: 'home',
-        title: 'Home page',
+        name: "home",
+        title: "Home page",
         component: Home,
-        path: '/home'
+        path: "/home",
+        isPublic: false,
+        layout: AuthLayout,
       },
       {
-        name: 'users',
-        title: 'Users',
+        name: "users",
+        title: "Users",
         hasSiderLink: true,
         routes: [
           {
-            name: 'list-users',
-            title: 'List of users',
+            name: "list-users",
+            title: "List of users",
             hasSiderLink: true,
             component: ListUsers,
-            path: '/users'
+            path: "/users",
+            isPublic: false,
+            layout: AuthLayout,
           },
           {
-            name: 'create-user',
-            title: 'Add user',
+            name: "create-user",
+            title: "Add user",
             hasSiderLink: true,
             component: CreateUser,
-            path: '/users/new'
-          }
-        ]
-      }
-    ]
-  }
+            path: "/users/new",
+            isPublic: false,
+            layout: AuthLayout,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const Routes = renderRoutes(routes);

@@ -3,6 +3,7 @@ import { ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { postWithoutToken, ResponseType } from "../Utils/request-axios";
+import { useStore } from "../store";
 
 type formData = {
   UserName: string;
@@ -15,6 +16,9 @@ interface LoginResponse {
 }
 
 const Login = () => {
+  const setToken = useStore((state) => state.setToken);
+  const setExpiration = useStore((state) => state.setExpiration);
+
   const schema: ZodType<formData> = z.object({
     UserName: z.string(),
     Password: z.string().min(3).max(100),
@@ -36,8 +40,8 @@ const Login = () => {
       );
       if (response?.statusText === "OK") {
         let resp = response?.data as LoginResponse;
-        localStorage.setItem("authExpiration", resp?.expiration);
-        localStorage.setItem("authTocken", resp?.token);
+        setToken(resp?.token);
+        setExpiration(resp?.expiration);
       }
     } catch (err) {
       console.log(err);

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { postWithoutToken, ResponseType } from "../Utils/request-axios";
 import { useStore } from "../store";
+import { useNavigate } from "react-router-dom";
 
 type formData = {
   UserName: string;
@@ -16,6 +17,7 @@ interface LoginResponse {
 }
 
 const Login = () => {
+  const navigate = useNavigate();
   const setToken = useStore((state) => state.setToken);
   const setExpiration = useStore((state) => state.setExpiration);
 
@@ -42,6 +44,7 @@ const Login = () => {
         let resp = response?.data as LoginResponse;
         setToken(resp?.token);
         setExpiration(resp?.expiration);
+        navigate("/users");
       }
     } catch (err) {
       console.log(err);

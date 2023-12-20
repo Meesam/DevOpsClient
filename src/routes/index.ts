@@ -38,7 +38,6 @@ export const routes = [
         title: "Home page",
         component: Home,
         path: "/home",
-        isPublic: false,
         layout: AuthLayout,
       },
       {
@@ -52,7 +51,6 @@ export const routes = [
             hasSiderLink: true,
             component: ListUsers,
             path: "/users",
-            isPublic: false,
             layout: AuthLayout,
           },
           {
@@ -61,7 +59,6 @@ export const routes = [
             hasSiderLink: true,
             component: CreateUser,
             path: "/users/new",
-            isPublic: false,
             layout: AuthLayout,
           },
         ],

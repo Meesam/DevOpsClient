@@ -31,7 +31,13 @@ const NavMenu = () => {
       </div>
       <div className="flex-1 py-7 flex flex-col gap-1 border-t border-neutral-300">
         {sideBarItems.map((item) => {
-          return <SideBarLink isToggled={isToggled} sideBarItem={item} />;
+          return (
+            <SideBarLink
+              key={item.title}
+              isToggled={isToggled}
+              sideBarItem={item}
+            />
+          );
         })}
       </div>
       <div className="flex flex-col gap-1 pt-2 border-t border-neutral-300">

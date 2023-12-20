@@ -32,26 +32,38 @@ export const renderRoutes = (mainRoutes: any) => {
 
         return (
           <Route key={index} element={<Layout />}>
-            <Route element={<ProtectedRoute isAuthorized={isAuthorized} />}>
-              {subRoutes.map(
-                ({
+            {subRoutes.map(
+              (
+                {
                   component: Component,
                   path,
                   name,
+                  isPublic,
                 }: {
                   component: any;
-                  path: any;
-                  name: any;
-                }) => {
-                  return (
-                    Component &&
-                    path && (
+                  path: string;
+                  name: string;
+                  isPublic: boolean;
+                },
+                index: number
+              ) => {
+                return (
+                  <Route
+                    element={
+                      <ProtectedRoute
+                        isPublic={isPublic}
+                        isAuthorized={isAuthorized}
+                      />
+                    }
+                    key={index}
+                  >
+                    {Component && path && (
                       <Route key={name} element={<Component />} path={path} />
-                    )
-                  );
-                }
-              )}
-            </Route>
+                    )}
+                  </Route>
+                );
+              }
+            )}
           </Route>
         );
       }

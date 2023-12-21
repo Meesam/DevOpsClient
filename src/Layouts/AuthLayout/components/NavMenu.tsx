@@ -5,9 +5,9 @@ import Logo from "../../../img/logo.svg";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
 
 const sideBarItems = [
-  { title: "Dashboard", path: "/dashboard", logo: "Dashboard" },
-  { title: "Customers", path: "/customers", logo: "Customers" },
-  { title: "Projects", path: "/projects", logo: "Projects" },
+  { title: "Dashboard", path: "/home", logo: "Dashboard" },
+  { title: "Customers", path: "/users", logo: "Customers" },
+  { title: "Projects", path: "/home", logo: "Projects" },
   { title: "Users", path: "/users", logo: "Users" },
 ];
 

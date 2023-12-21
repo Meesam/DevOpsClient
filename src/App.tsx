@@ -1,18 +1,12 @@
 import React from "react";
-import { Routes } from "./routes";
-import { useStore } from "./store";
+import AuthProvider from "./AuthProvider/AuthProvider";
+import Router from "./routes/Router";
 
-const App = () => {
-  const token = useStore((state) => state.token);
-  const getToken = useStore((state) => state.getToken);
-
-  React.useEffect(() => {
-    if (token === "" || token === undefined) {
-      getToken();
-    }
-  }, [token, getToken]);
-
-  return <Routes isAuthorized={token != "" && token != null} />;
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <Router />
+    </AuthProvider>
+  );
 };
-
 export default App;

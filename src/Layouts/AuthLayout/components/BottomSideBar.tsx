@@ -1,38 +1,35 @@
 import React from "react";
+import { IoSettingsOutline } from "react-icons/io5";
+import { IoMdHelpCircleOutline } from "react-icons/io";
+import { LiaSignOutAltSolid } from "react-icons/lia";
+import { Link } from "react-router-dom";
+import classNames from "classnames";
 
 interface BottomSideBarProps {
   isToggled: boolean;
 }
 const BottomSideBar: React.FC<BottomSideBarProps> = ({ isToggled }) => {
+  const toggleClass = classNames({
+    "flex items-center font-light py-2 hover:underline text-neutral-600": true,
+    "justify-center text-[1.2rem]": isToggled,
+    "gap-2 px-3 text-sm": !isToggled,
+  });
+
   return (
     <>
-      <a
-        href=""
-        className="flex items-center gap-2 font-light
-         px-3 py-2 hover:underline
-          text-sm text-neutral-600"
-      >
-        <i className="bi bi-gear-fill text-sky-700"></i>
+      <Link to="" className={toggleClass}>
+        <IoSettingsOutline size={18} />
         {!isToggled && "Setting"}
-      </a>
-      <a
-        href=""
-        className="flex items-center gap-2 font-light
-         px-3 py-2 hover:underline
-          text-sm text-neutral-600"
-      >
-        <i className="bi bi-question-circle-fill text-sky-700"></i>
+      </Link>
+      <Link to="" className={toggleClass}>
+        <IoMdHelpCircleOutline size={18} />
         {!isToggled && "Help"}
-      </a>
+      </Link>
 
-      <button
-        className="flex items-center font-light
-          py-2
-          text-sm text-red-600 hover:underline gap-2"
-        type="submit"
-      >
-        {!isToggled && "Logout"}
-      </button>
+      <Link to="" className={toggleClass}>
+        <LiaSignOutAltSolid size={20} />
+        {!isToggled && "Log out"}
+      </Link>
     </>
   );
 };

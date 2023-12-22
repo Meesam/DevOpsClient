@@ -3,6 +3,7 @@ import SideBarLink from "./SideBarLink ";
 import BottomSideBar from "./BottomSideBar";
 import Logo from "../../../img/logo.svg";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
+import classNames from "classnames";
 
 const sideBarItems = [
   { title: "Dashboard", path: "/home", logo: "Dashboard" },
@@ -14,8 +15,13 @@ const sideBarItems = [
 const NavMenu = () => {
   const [isToggled, setIsToggled] = React.useState(false);
 
+  const toggleClass = classNames({
+    "flex flex-col bg-neutral-200 p-3 border-r-1 relative duration-300": true,
+    "w-14": isToggled,
+  });
+
   return (
-    <div className="flex flex-col bg-neutral-200 p-3 border-r-1 relative duration-300">
+    <div className={toggleClass}>
       <div
         onClick={() => setIsToggled(!isToggled)}
         className="absolute -right-[0.7rem] top-10 flex justify-center items-center w-7 h-7 hover\:bg-gray-50 bg-sky-700 rounded-full text-white cursor-pointer"

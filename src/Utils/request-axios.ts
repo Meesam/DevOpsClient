@@ -1,14 +1,21 @@
 import axios from "axios";
 import { ApiBaseUrl } from "./app-setting";
 
+interface ResponseDataType {
+  isSuccess: boolean;
+  message: string;
+  statusCode: number;
+  response: any;
+}
+
 export interface ResponseType {
-  data: object;
+  data: Partial<ResponseDataType>;
   status: number;
   statusText: string;
 }
 
 export const getWithoutToken = (path: string) => {
-  axios({
+  return axios({
     method: "get",
     url: `${ApiBaseUrl}/${path}`,
     headers: {
@@ -38,19 +45,19 @@ export const postWithToken = (path: string, data: object) => {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
-      Authorization: `Bearer ${localStorage.getItem("authTocken")}`,
+      Authorization: `Bearer ${localStorage.getItem("myToken")}`,
     },
   });
 };
 
 export const getWithToken = (path: string) => {
-  axios({
+  return axios({
     method: "get",
     url: `${ApiBaseUrl}/${path}`,
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
-      Authorization: `Bearer ${localStorage.getItem("authTocken")}`,
+      Authorization: `Bearer ${localStorage.getItem("myToken")}`,
     },
   });
 };

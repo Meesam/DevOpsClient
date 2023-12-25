@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useStore } from "../store";
 
 type AuthContext = {
   login: () => void;
@@ -15,9 +14,6 @@ export const AuthContext = React.createContext<AuthContext>({
 
 const IsAuthenticatedKey = "myToken";
 const AuthProvider: React.FC<any> = ({ children }: { children: any }) => {
-  //const getToken = useStore((state) => state.getToken);
-  //const token = useStore((state) => state.token);
-
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   const login = useCallback(() => {

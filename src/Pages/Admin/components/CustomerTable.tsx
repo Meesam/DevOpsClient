@@ -10,7 +10,11 @@ import {
 } from "@tanstack/react-table";
 import { Customer } from "../../../Services/CustomerService";
 import Filter from "./Filter";
-import { MdOutlineDeleteForever } from "react-icons/md";
+import {
+  MdOutlineDeleteForever,
+  MdKeyboardDoubleArrowLeft,
+} from "react-icons/md";
+import { IconButton, Select } from "@radix-ui/themes";
 
 interface CustomerTableProps {
   data: Customer[];
@@ -30,12 +34,11 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data, columns }) => {
   return (
     <div>
       <div className="h-2" />
-      <table>
+      <table className="w-full">
         <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
+          {table.getHeaderGroups().map((headerGroup: any) => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                console.log("header ", header);
+              {headerGroup.headers.map((header: any) => {
                 return (
                   <th key={header.id} colSpan={header.colSpan} className="pb-2">
                     {header.isPlaceholder ? null : (
@@ -59,11 +62,10 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data, columns }) => {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => {
+          {table.getRowModel().rows.map((row: any) => {
             return (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => {
-                  console.log("cell ", cell);
+              <tr key={row.id} className="hover:bg-slate-100 hover:rounded-md">
+                {row.getVisibleCells().map((cell: any) => {
                   if (cell.column.id === "action") {
                     return (
                       <td
@@ -90,13 +92,13 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data, columns }) => {
       </table>
       <div className="h-2" />
       <div className="flex items-center gap-2">
-        <button
-          className="border rounded p-1"
+        <IconButton
+          color="blue"
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
-          {"<<"}
-        </button>
+          <MdKeyboardDoubleArrowLeft />
+        </IconButton>
         <button
           className="border rounded p-1"
           onClick={() => table.previousPage()}
@@ -137,18 +139,16 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data, columns }) => {
             className="border p-1 rounded w-16"
           />
         </span>
-        <select
-          value={table.getState().pagination.pageSize}
-          onChange={(e) => {
-            table.setPageSize(Number(e.target.value));
-          }}
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
+        <Select.Root defaultValue="10">
+          <Select.Trigger />
+          <Select.Content position="popper">
+            {[10, 20, 30, 40, 50].map((pageSize, index) => (
+              <Select.Item value={pageSize.toString()} key={index}>
+                Show {pageSize.toString()}
+              </Select.Item>
+            ))}
+          </Select.Content>
+        </Select.Root>
       </div>
     </div>
   );

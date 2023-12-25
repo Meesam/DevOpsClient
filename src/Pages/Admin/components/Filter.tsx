@@ -1,5 +1,7 @@
 import React from "react";
 import { Column, Table as ReactTable } from "@tanstack/react-table";
+import { TextField } from "@radix-ui/themes";
+import { GoSearch } from "react-icons/go";
 
 interface FilterProps {
   column: Column<any, any>;
@@ -41,13 +43,20 @@ const Filter: React.FC<FilterProps> = ({ column, table }) => {
       />
     </div>
   ) : (
-    <input
-      type="text"
-      value={(columnFilterValue ?? "") as string}
-      onChange={(e) => column.setFilterValue(e.target.value)}
-      placeholder={`Search...`}
-      className="w-56 border shadow rounded-md p-2 text-sm font-thin focus:outline-none hover:border-gray-400"
-    />
+    <>
+      <TextField.Root>
+        <TextField.Slot>
+          <GoSearch />
+        </TextField.Slot>
+        <TextField.Input
+          placeholder="Search..."
+          type="text"
+          value={(columnFilterValue ?? "") as string}
+          onChange={(e) => column.setFilterValue(e.target.value)}
+          className="text-sm font-normal"
+        />
+      </TextField.Root>
+    </>
   );
 };
 

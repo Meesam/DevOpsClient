@@ -9,6 +9,7 @@ import Home from "../Pages/Home";
 import ListUsers from "../Pages/ListUsers";
 import { useAuth } from "../AuthProvider/AuthProvider";
 import Customers from "../Pages/Admin/Customers";
+import Projects from "../Pages/Admin/Projects";
 
 const Router: React.FC = () => {
   const auth = useAuth();
@@ -23,7 +24,10 @@ const Router: React.FC = () => {
                 <Route path={"/login"} exact component={() => <Login />} />
               </Layout>
             </Route>
-            <Route path={["", "/home", "/users", "/customers"]} exact>
+            <Route
+              path={["", "/home", "/users", "/customers", "/projects"]}
+              exact
+            >
               <Layout layout={AuthLayout} isPublic={true}>
                 <PrivateRoute
                   path={["", "/home"]}
@@ -34,6 +38,11 @@ const Router: React.FC = () => {
                   path={"/users"}
                   exact
                   component={() => <ListUsers />}
+                />
+                <PrivateRoute
+                  path={"/projects"}
+                  exact
+                  component={() => <Projects />}
                 />
                 <PrivateRoute
                   path={"/customers"}

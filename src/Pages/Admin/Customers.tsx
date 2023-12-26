@@ -1,16 +1,16 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getAllCustomers, Customer } from "../../Services/CustomerService";
+import { getAllCustomers } from "../../Services/CustomerService";
 import LoadingBar from "react-top-loading-bar";
-import CustomerTable from "./components/CustomerTable";
+import AppTable from "./components/AppTable";
+import moment from "moment";
 
 const Customers = () => {
   const ref = React.useRef<any>(null);
-  const {
-    data: customers,
-    isLoading,
-    isError,
-  } = useQuery({ queryKey: ["customers"], queryFn: getAllCustomers });
+  const { data: customers, isLoading } = useQuery({
+    queryKey: ["customers"],
+    queryFn: getAllCustomers,
+  });
 
   if (isLoading) {
     ref?.current?.continuousStart();
@@ -42,18 +42,22 @@ const Customers = () => {
         header: () => (
           <span className="text-sm text-gray-500 text-left">Created Date</span>
         ),
+        cell: (props: any) => (
+          <span>{moment(props.getValue()).format("MM-DD-YYYY")}</span>
+        ),
       },
       {
         accessorKey: "updatedDate",
         header: () => (
           <span className="text-sm text-gray-500 text-left">Updated Date</span>
         ),
+        cell: (props: any) => (
+          <span>{moment(props.getValue()).format("MM-DD-YYYY")}</span>
+        ),
       },
       {
         accessorKey: "action",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Action</span>
-        ),
+        header: () => <span className="text-sm text-gray-500 text-left"></span>,
       },
     ];
   };
@@ -63,7 +67,7 @@ const Customers = () => {
       <span className="text-gray-800 font-semibold text-lg ">
         Customer List
       </span>
-      {customers && <CustomerTable data={customers} columns={getColumn()} />}
+      {customers && <AppTable data={customers} columns={getColumn()} />}
     </div>
   );
 };

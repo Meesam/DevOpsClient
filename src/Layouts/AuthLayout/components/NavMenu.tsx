@@ -8,7 +8,7 @@ import classNames from "classnames";
 const sideBarItems = [
   { title: "Dashboard", path: "/home", logo: "Dashboard" },
   { title: "Customers", path: "/customers", logo: "Customers" },
-  { title: "Projects", path: "/home", logo: "Projects" },
+  { title: "Projects", path: "/projects", logo: "Projects" },
   { title: "Users", path: "/users", logo: "Users" },
 ];
 

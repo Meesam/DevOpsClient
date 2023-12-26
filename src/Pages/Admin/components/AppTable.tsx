@@ -11,17 +11,20 @@ import {
 import { Customer } from "../../../Services/CustomerService";
 import Filter from "./Filter";
 import {
-  MdOutlineDeleteForever,
   MdKeyboardDoubleArrowLeft,
+  MdKeyboardDoubleArrowRight,
+  MdArrowBackIos,
+  MdArrowForwardIos,
 } from "react-icons/md";
-import { IconButton, Select } from "@radix-ui/themes";
+import { IconButton, Select, TextField } from "@radix-ui/themes";
+import RowAction from "./RowAction";
 
-interface CustomerTableProps {
-  data: Customer[];
-  columns: ColumnDef<Customer>[];
+interface AppTableProps {
+  data: any[];
+  columns: ColumnDef<any>[];
 }
 
-const CustomerTable: React.FC<CustomerTableProps> = ({ data, columns }) => {
+const AppTable: React.FC<AppTableProps> = ({ data, columns }) => {
   const table = useReactTable({
     data,
     columns,
@@ -62,32 +65,43 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data, columns }) => {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row: any) => {
-            return (
-              <tr key={row.id} className="hover:bg-slate-100 hover:rounded-md">
-                {row.getVisibleCells().map((cell: any) => {
-                  if (cell.column.id === "action") {
-                    return (
-                      <td
-                        key={cell.id}
-                        className=" text-xl text-gray-700 py-3 text-center"
-                      >
-                        <MdOutlineDeleteForever color="#C40006D3" />
-                      </td>
-                    );
-                  }
-                  return (
-                    <td key={cell.id} className="text-sm text-gray-700 py-3">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
+          <>
+            {table.getRowModel().rows.length <= 0 ? (
+              <div className="text-sm font-semibold text-gray-500">
+                No Record found...
+              </div>
+            ) : (
+              table.getRowModel().rows.map((row: any) => {
+                return (
+                  <tr key={row.id}>
+                    {row.getVisibleCells().map((cell: any) => {
+                      if (cell.column.id === "action") {
+                        return (
+                          <td
+                            key={cell.id}
+                            className="text-xl text-gray-700 py-3 text-center"
+                          >
+                            <RowAction />
+                          </td>
+                        );
+                      }
+                      return (
+                        <td
+                          key={cell.id}
+                          className="text-sm text-gray-700 py-3"
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })
+            )}
+          </>
         </tbody>
       </table>
       <div className="h-2" />
@@ -99,44 +113,47 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data, columns }) => {
         >
           <MdKeyboardDoubleArrowLeft />
         </IconButton>
-        <button
-          className="border rounded p-1"
+        <IconButton
+          color="blue"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          {"<"}
-        </button>
-        <button
-          className="border rounded p-1"
+          <MdArrowBackIos />
+        </IconButton>
+
+        <IconButton
+          color="blue"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          {">"}
-        </button>
-        <button
-          className="border rounded p-1"
+          <MdArrowForwardIos />
+        </IconButton>
+
+        <IconButton
+          color="blue"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
         >
-          {">>"}
-        </button>
+          <MdKeyboardDoubleArrowRight />
+        </IconButton>
+
         <span className="flex items-center gap-1">
-          <div>Page</div>
-          <strong>
+          <div className=" text-sm text-gray-600">Page</div>
+          <strong className=" text-sm font-bold text-gray-500">
             {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </strong>
         </span>
         <span className="flex items-center gap-1">
-          | Go to page:
-          <input
+          | <p className=" text-sm text-gray-600">Go to page:</p>
+          <TextField.Input
             type="number"
             defaultValue={table.getState().pagination.pageIndex + 1}
             onChange={(e) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               table.setPageIndex(page);
             }}
-            className="border p-1 rounded w-16"
+            style={{ maxWidth: 80, minWidth: 80, width: 80 }}
           />
         </span>
         <Select.Root defaultValue="10">
@@ -154,4 +171,4 @@ const CustomerTable: React.FC<CustomerTableProps> = ({ data, columns }) => {
   );
 };
 
-export default CustomerTable;
+export default AppTable;

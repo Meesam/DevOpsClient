@@ -4,12 +4,12 @@ import UnAuthLayout from "../Layouts/UnAuthLayout";
 import PrivateRoute from "../routes/ProtectedRoute";
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Login from "../Pages/Login";
-import Home from "../Pages/Home";
-import ListUsers from "../Pages/ListUsers";
+import Login from "../Pages/Auth/Login";
 import { useAuth } from "../AuthProvider/AuthProvider";
 import Customers from "../Pages/Admin/Customers";
 import Projects from "../Pages/Admin/Projects";
+import AddCustomer from "../Pages/Admin/AddCustomer";
+import AddProject from "../Pages/Admin/AddProject";
 
 const Router: React.FC = () => {
   const auth = useAuth();
@@ -25,22 +25,18 @@ const Router: React.FC = () => {
               </Layout>
             </Route>
             <Route
-              path={["", "/home", "/users", "/customers", "/projects"]}
+              path={[
+                "",
+                "/customers",
+                "/projects",
+                "/add-customer",
+                "/add-project",
+              ]}
               exact
             >
               <Layout layout={AuthLayout} isPublic={true}>
                 <PrivateRoute
-                  path={["", "/home"]}
-                  exact
-                  component={() => <Home />}
-                />
-                <PrivateRoute
-                  path={"/users"}
-                  exact
-                  component={() => <ListUsers />}
-                />
-                <PrivateRoute
-                  path={"/projects"}
+                  path={["", "/projects"]}
                   exact
                   component={() => <Projects />}
                 />
@@ -48,6 +44,16 @@ const Router: React.FC = () => {
                   path={"/customers"}
                   exact
                   component={() => <Customers />}
+                />
+                <PrivateRoute
+                  path={"/add-customer"}
+                  exact
+                  component={() => <AddCustomer />}
+                />
+                <PrivateRoute
+                  path={"/add-project"}
+                  exact
+                  component={() => <AddProject />}
                 />
               </Layout>
             </Route>

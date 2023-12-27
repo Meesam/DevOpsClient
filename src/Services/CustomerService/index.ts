@@ -13,31 +13,10 @@ export interface Customer {
   appMenus: any[];
 }
 
-export interface Project {
-  projectId: number;
-  customerId: number;
-  customerName: string;
-  projectName: string;
-  projectDescription: string;
-  projectType: string;
-  projectStartDate: Date;
-  projectEndDate: Date;
-  projectStatus: string;
-}
-
 export const getAllCustomers = async () => {
   try {
     const resp: ResponseType = await getWithToken("Customer/getAll");
     if (resp.status === 200) return resp.data.response as Customer[];
-  } catch (err) {
-    console.log("err ", err);
-  }
-};
-
-export const getAllProjects = async () => {
-  try {
-    const resp: ResponseType = await getWithToken("Project/getall");
-    if (resp.status === 200) return resp.data.response as Project[];
   } catch (err) {
     console.log("err ", err);
   }

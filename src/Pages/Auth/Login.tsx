@@ -2,9 +2,9 @@ import React from "react";
 import { ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { postWithoutToken, ResponseType } from "../Utils/request-axios";
-import { useStore } from "../store";
-import { useAuth } from "../AuthProvider/AuthProvider";
+import { postWithoutToken, ResponseType } from "../../Utils/request-axios";
+import { useStore } from "../../store";
+import { useAuth } from "../../AuthProvider/AuthProvider";
 import { useHistory } from "react-router";
 
 type formData = {
@@ -47,7 +47,7 @@ const Login = () => {
         setToken(resp?.token);
         setExpiration(resp?.expiration);
         auth.login();
-        history.replace(`/users`);
+        history.replace(`/projects`);
       }
     } catch (err) {
       console.log(err);

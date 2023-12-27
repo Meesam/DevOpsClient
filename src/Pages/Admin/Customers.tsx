@@ -4,9 +4,15 @@ import { getAllCustomers } from "../../Services/CustomerService";
 import LoadingBar from "react-top-loading-bar";
 import AppTable from "./components/AppTable";
 import moment from "moment";
+import { SortingState } from "@tanstack/react-table";
+import { Button } from "@radix-ui/themes";
+import { IoMdAdd } from "react-icons/io";
+import { useHistory } from "react-router";
 
 const Customers = () => {
   const ref = React.useRef<any>(null);
+  const history = useHistory();
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const { data: customers, isLoading } = useQuery({
     queryKey: ["customers"],
     queryFn: getAllCustomers,
@@ -62,12 +68,29 @@ const Customers = () => {
     ];
   };
 
+  const handleAddCustomer = () => {
+    history.replace(`/add-customer`);
+  };
+
   return (
     <div className="flex-col bg-white border rounded-md shadow-lg p-6">
-      <span className="text-gray-800 font-semibold text-lg ">
-        Customer List
-      </span>
-      {customers && <AppTable data={customers} columns={getColumn()} />}
+      <div className="flex justify-between items-center">
+        <span className="text-gray-800 font-semibold text-lg ">
+          Customer List
+        </span>
+        <Button onClick={handleAddCustomer}>
+          <IoMdAdd color="#FFFFFF" /> Add New
+        </Button>
+      </div>
+
+      {customers && (
+        <AppTable
+          sorting={sorting}
+          setSorting={setSorting}
+          data={customers}
+          columns={getColumn()}
+        />
+      )}
     </div>
   );
 };

@@ -1,13 +1,18 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getAllProjects } from "../../Services/CustomerService";
+import { getAllProjects } from "../../Services/ProjectService";
 import LoadingBar from "react-top-loading-bar";
 import AppTable from "./components/AppTable";
 import moment from "moment";
-import { Badge } from "@radix-ui/themes";
+import { Badge, Button } from "@radix-ui/themes";
+import { SortingState } from "@tanstack/react-table";
+import { IoMdAdd } from "react-icons/io";
+import { useHistory } from "react-router";
 
 const Projects = () => {
   const ref = React.useRef<any>(null);
+  const history = useHistory();
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const { data: projects, isLoading } = useQuery({
     queryKey: ["projects"],
     queryFn: getAllProjects,
@@ -85,10 +90,28 @@ const Projects = () => {
     ];
   };
 
+  const handleAddProject = () => {
+    history.replace(`/add-project`);
+  };
+
   return (
     <div className="flex-col bg-white border rounded-md shadow-lg p-6">
-      <span className="text-gray-800 font-semibold text-lg">Project List</span>
-      {projects && <AppTable data={projects} columns={getColumn()} />}
+      <div className="flex justify-between items-center">
+        <span className="text-gray-800 font-semibold text-lg ">
+          Project List
+        </span>
+        <Button onClick={handleAddProject}>
+          <IoMdAdd color="#FFFFFF" /> Add New
+        </Button>
+      </div>
+      {projects && (
+        <AppTable
+          sorting={sorting}
+          setSorting={setSorting}
+          data={projects}
+          columns={getColumn()}
+        />
+      )}
     </div>
   );
 };

@@ -5,10 +5,11 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
+  SortingState,
   ColumnDef,
   flexRender,
 } from "@tanstack/react-table";
-import { Customer } from "../../../Services/CustomerService";
 import Filter from "./Filter";
 import {
   MdKeyboardDoubleArrowLeft,
@@ -17,20 +18,33 @@ import {
   MdArrowForwardIos,
 } from "react-icons/md";
 import { IconButton, Select, TextField } from "@radix-ui/themes";
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import RowAction from "./RowAction";
 
 interface AppTableProps {
   data: any[];
   columns: ColumnDef<any>[];
+  sorting: any;
+  setSorting: any;
 }
 
-const AppTable: React.FC<AppTableProps> = ({ data, columns }) => {
+const AppTable: React.FC<AppTableProps> = ({
+  data,
+  columns,
+  sorting,
+  setSorting,
+}) => {
   const table = useReactTable({
     data,
     columns,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     debugTable: true,
   });
 
@@ -45,11 +59,21 @@ const AppTable: React.FC<AppTableProps> = ({ data, columns }) => {
                 return (
                   <th key={header.id} colSpan={header.colSpan} className="pb-2">
                     {header.isPlaceholder ? null : (
-                      <div className="flex flex-col space-y-2 mr-4">
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                      <div
+                        className="flex flex-col space-y-2 mr-4"
+                        onClick={header.column.getToggleSortingHandler()}
+                      >
+                        <div className="flex gap-1 items-center">
+                          {flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                          {{
+                            asc: <TiArrowSortedDown />,
+                            desc: <TiArrowSortedUp />,
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </div>
+
                         {header.column.getCanFilter() &&
                         header.column.id !== "action" ? (
                           <div>

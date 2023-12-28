@@ -29,7 +29,7 @@ const AddCustomerBasicInfo = () => {
         <label
           htmlFor="name"
           className="text-sm font-medium"
-          data-testid="customer-name-label"
+          data-cy="customer-name-label"
         >
           Customer Name
         </label>
@@ -40,11 +40,15 @@ const AddCustomerBasicInfo = () => {
           value={state?.name || ""}
           placeholder="Enter customer name"
           onChange={handleOnChange}
-          data-testid="customer-name-label"
+          data-cy="customer-name-input"
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="website" className="text-sm font-medium">
+        <label
+          htmlFor="website"
+          className="text-sm font-medium"
+          data-cy="website-label"
+        >
           Website
         </label>
         <TextField.Input
@@ -54,10 +58,15 @@ const AddCustomerBasicInfo = () => {
           placeholder="Enter website name"
           value={state?.website || ""}
           onChange={handleOnChange}
+          data-cy="website-input"
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="logoUrl" className="text-sm font-medium">
+        <label
+          htmlFor="logoUrl"
+          className="text-sm font-medium"
+          data-cy="LogoUrl-label"
+        >
           LogoUrl
         </label>
         <TextField.Input
@@ -67,10 +76,15 @@ const AddCustomerBasicInfo = () => {
           placeholder="Enter logo url"
           value={state?.logoUrl || ""}
           onChange={handleOnChange}
+          data-cy="LogoUrl-input"
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label htmlFor="description" className="text-sm font-medium">
+        <label
+          htmlFor="description"
+          className="text-sm font-medium"
+          data-cy="Description-label"
+        >
           Description
         </label>
         <TextArea
@@ -80,6 +94,7 @@ const AddCustomerBasicInfo = () => {
           name="description"
           value={state?.description || ""}
           onChange={handleOnChange}
+          data-cy="Description-input"
         />
       </div>
     </div>

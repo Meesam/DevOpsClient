@@ -1,26 +1,29 @@
 import { TextArea, TextField } from "@radix-ui/themes";
 import React from "react";
+import { ZodType, boolean, z } from "zod";
+import { CustomerBasicInfo } from "../../../Interface";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const AddCustomerBasicInfo = () => {
-  const [state, setState] = React.useState({
-    name: "",
-    website: "",
-    logoUrl: "",
-    description: "",
+  const schema: ZodType<Partial<CustomerBasicInfo>> = z.object({
+    name: z.string().min(4).max(10),
+    website: z
+      .string()
+      .regex(
+        /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g
+      ),
+    logoUrl: z.string().min(4).max(255),
+    description: z.string().min(4).max(255),
   });
 
-  const handleOnChange = React.useCallback(
-    (
-      e:
-        | React.FormEvent<HTMLInputElement>
-        | React.ChangeEventHandler<HTMLTextAreaElement>
-        | any
-    ) => {
-      const { name, value } = e.currentTarget;
-      setState((prevState) => ({ ...prevState, [name]: value }));
-    },
-    []
-  );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CustomerBasicInfo>({
+    resolver: zodResolver(schema),
+  });
 
   return (
     <div className="flex flex-col gap-4 bg-white h-auto p-5 rounded-md shadow-md w-full">
@@ -35,13 +38,16 @@ const AddCustomerBasicInfo = () => {
         </label>
         <TextField.Input
           type="text"
-          name="name"
           id="name"
-          value={state?.name || ""}
           placeholder="Enter customer name"
-          onChange={handleOnChange}
+          {...register("name")}
           data-cy="customer-name-input"
         />
+        {errors.name && (
+          <span className="text-xs text-red-500" data-cy="name-error">
+            {errors.name.message}
+          </span>
+        )}
       </div>
       <div className="flex flex-col gap-1">
         <label
@@ -53,13 +59,16 @@ const AddCustomerBasicInfo = () => {
         </label>
         <TextField.Input
           type="text"
-          name="website"
           id="website"
           placeholder="Enter website name"
-          value={state?.website || ""}
-          onChange={handleOnChange}
+          {...register("website")}
           data-cy="website-input"
         />
+        {errors.website && (
+          <span className="text-xs text-red-500" data-cy="website-error">
+            {errors.website.message}
+          </span>
+        )}
       </div>
       <div className="flex flex-col gap-1">
         <label
@@ -71,13 +80,16 @@ const AddCustomerBasicInfo = () => {
         </label>
         <TextField.Input
           type="text"
-          name="logoUrl"
           id="logoUrl"
           placeholder="Enter logo url"
-          value={state?.logoUrl || ""}
-          onChange={handleOnChange}
+          {...register("logoUrl")}
           data-cy="LogoUrl-input"
         />
+        {errors.logoUrl && (
+          <span className="text-xs text-red-500" data-cy="logoUrl-error">
+            {errors.logoUrl.message}
+          </span>
+        )}
       </div>
       <div className="flex flex-col gap-1">
         <label
@@ -91,11 +103,14 @@ const AddCustomerBasicInfo = () => {
           size="3"
           id="description"
           placeholder="Description"
-          name="description"
-          value={state?.description || ""}
-          onChange={handleOnChange}
+          {...register("description")}
           data-cy="Description-input"
         />
+        {errors.description && (
+          <span className="text-xs text-red-500" data-cy="description-error">
+            {errors.description.message}
+          </span>
+        )}
       </div>
     </div>
   );

@@ -4,27 +4,11 @@ import { IoMdAdd } from "react-icons/io";
 import { ZodType, boolean, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-type CustomerContact = {
-  phone: string;
-  email: string;
-  street: string;
-  city: string;
-  state: string;
-  postalCode: string;
-  isPrimary: boolean;
-};
+import { CustomerContact } from "../../../Interface";
+import { useCustomer } from "../../../Context/CustomerContext";
 
 const AddCustomerContact = () => {
-  const [contactState, setContactState] = React.useState({
-    phone: "",
-    email: "",
-    street: "",
-    city: "",
-    state: "",
-    postalCode: "",
-    primaryAddress: false,
-  });
+  const { addCustomerContact } = useCustomer();
 
   const schema: ZodType<Partial<CustomerContact>> = z.object({
     phone: z.string().min(4).max(10),
@@ -44,8 +28,8 @@ const AddCustomerContact = () => {
   });
 
   const addContactDetails = (data: CustomerContact) => {
-    debugger;
     console.log("CustomerContact ", data);
+    addCustomerContact(data);
   };
 
   return (

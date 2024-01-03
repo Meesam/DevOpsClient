@@ -1,16 +1,5 @@
+import { Project } from "../../Interface";
 import { getWithToken, ResponseType } from "../../Utils/request-axios";
-
-export interface Project {
-  projectId: number;
-  customerId: number;
-  customerName: string;
-  projectName: string;
-  projectDescription: string;
-  projectType: string;
-  projectStartDate: Date;
-  projectEndDate: Date;
-  projectStatus: string;
-}
 
 export const getAllProjects = async () => {
   try {

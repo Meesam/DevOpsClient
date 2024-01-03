@@ -1,17 +1,5 @@
+import { Customer } from "../../Interface";
 import { getWithToken, ResponseType } from "../../Utils/request-axios";
-
-export interface Customer {
-  id: number;
-  name: string;
-  website: string;
-  logoUrl: string;
-  createdDate: Date;
-  updatedDate: Date;
-  addressList: any[];
-  emailAddresses: any[];
-  projects: any[];
-  appMenus: any[];
-}
 
 export const getAllCustomers = async () => {
   try {

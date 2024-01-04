@@ -1,29 +1,26 @@
-import { TextArea, TextField } from "@radix-ui/themes";
+import { Button, TextArea, TextField } from "@radix-ui/themes";
 import React from "react";
-import { ZodType, boolean, z } from "zod";
 import { CustomerBasicInfo } from "../../../Interface";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FaSave } from "react-icons/fa";
+import { useCustomer } from "../../../Context/CustomerContext";
+import { customerBasicInfoSchema } from "../../../ValidationSchema";
 
 const AddCustomerBasicInfo = () => {
-  const schema: ZodType<Partial<CustomerBasicInfo>> = z.object({
-    name: z.string().min(4).max(10),
-    website: z
-      .string()
-      .regex(
-        /(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?\/[a-zA-Z0-9]{2,}|((https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z]{2,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?)|(https:\/\/www\.|http:\/\/www\.|https:\/\/|http:\/\/)?[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}\.[a-zA-Z0-9]{2,}(\.[a-zA-Z0-9]{2,})?/g
-      ),
-    logoUrl: z.string().min(4).max(255),
-    description: z.string().min(4).max(255),
-  });
+  const { addCustomerBasicInfo } = useCustomer();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<CustomerBasicInfo>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(customerBasicInfoSchema),
   });
+
+  const addBasicDetail = (data: CustomerBasicInfo) => {
+    addCustomerBasicInfo(data);
+  };
 
   return (
     <div className="flex flex-col gap-4 bg-white h-auto p-5 rounded-md shadow-md w-full">
@@ -111,6 +108,17 @@ const AddCustomerBasicInfo = () => {
             {errors.description.message}
           </span>
         )}
+      </div>
+      <div className="flex flex-col gap-1 items-end">
+        <div className="w-auto">
+          <Button
+            type="button"
+            onClick={handleSubmit(addBasicDetail)}
+            data-cy="addContact-button"
+          >
+            <FaSave /> Save
+          </Button>
+        </div>
       </div>
     </div>
   );

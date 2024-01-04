@@ -1,34 +1,24 @@
-import { Button, Checkbox, TextField } from "@radix-ui/themes";
+import { Button, TextField } from "@radix-ui/themes";
 import React from "react";
 import { IoMdAdd } from "react-icons/io";
-import { ZodType, boolean, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomerContact } from "../../../Interface";
 import { useCustomer } from "../../../Context/CustomerContext";
+import { customerContactsSchema } from "../../../ValidationSchema";
 
 const AddCustomerContact = () => {
   const { addCustomerContact } = useCustomer();
-
-  const schema: ZodType<Partial<CustomerContact>> = z.object({
-    phone: z.string().min(4).max(10),
-    email: z.string().email(),
-    street: z.string().min(4).max(20),
-    city: z.string().min(4).max(20),
-    state: z.string().min(2).max(20),
-    postalCode: z.string().min(4).max(10),
-  });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<CustomerContact>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(customerContactsSchema),
   });
 
   const addContactDetails = (data: CustomerContact) => {
-    console.log("CustomerContact ", data);
     addCustomerContact(data);
   };
 
@@ -161,14 +151,16 @@ const AddCustomerContact = () => {
           </span>
         )}
       </div>
-      <div className="flex flex-col gap-1">
-        <Button
-          type="button"
-          onClick={handleSubmit(addContactDetails)}
-          data-cy="addContact-button"
-        >
-          <IoMdAdd /> Add New Contact
-        </Button>
+      <div className="flex flex-col gap-1 items-end">
+        <div className="w-auto">
+          <Button
+            type="button"
+            onClick={handleSubmit(addContactDetails)}
+            data-cy="addContact-button"
+          >
+            <IoMdAdd /> Add New Contact
+          </Button>
+        </div>
       </div>
     </div>
   );

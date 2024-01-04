@@ -1,5 +1,3 @@
-import { Table } from "@radix-ui/themes";
-import moment from "moment";
 import React from "react";
 import { useCustomer } from "../../../Context/CustomerContext";
 import AppTable from "./AppTable";
@@ -47,11 +45,15 @@ const CustomerContacts = () => {
           <span className="text-sm text-gray-500 text-left">Zip code</span>
         ),
       },
+      {
+        accessorKey: "action",
+        header: () => <span className="text-sm text-gray-500 text-left"></span>,
+      },
     ];
   };
 
   return (
-    <div className="bg-white rounded-md shadow-md w-full">
+    <div className="flex-col bg-white border rounded-md shadow-lg p-6">
       {customerContacts && customerContacts.length > 0 && (
         <AppTable
           sorting={sorting}

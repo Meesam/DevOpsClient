@@ -10,6 +10,7 @@ import Customers from "../Pages/Admin/Customers";
 import Projects from "../Pages/Admin/Projects";
 import AddCustomer from "../Pages/Admin/AddCustomer";
 import AddProject from "../Pages/Admin/AddProject";
+import CustomerProvider from "../Context/CustomerContext";
 
 const Router: React.FC = () => {
   const auth = useAuth();
@@ -48,7 +49,11 @@ const Router: React.FC = () => {
                 <PrivateRoute
                   path={"/add-customer"}
                   exact
-                  component={() => <AddCustomer />}
+                  component={() => (
+                    <CustomerProvider>
+                      <AddCustomer />
+                    </CustomerProvider>
+                  )}
                 />
                 <PrivateRoute
                   path={"/add-project"}

@@ -12,37 +12,67 @@ const CustomerContacts = () => {
       {
         accessorKey: "phone",
         header: () => (
-          <span className="text-sm text-gray-500 text-left">Phone</span>
+          <span
+            className="text-sm text-gray-500 text-left"
+            data-cy="cusContact-table-phone"
+          >
+            Phone
+          </span>
         ),
       },
       {
         accessorKey: "email",
         header: () => (
-          <span className="text-sm text-gray-500 text-left">Email</span>
+          <span
+            className="text-sm text-gray-500 text-left"
+            data-cy="cusContact-table-email"
+          >
+            Email
+          </span>
         ),
       },
       {
         accessorKey: "street",
         header: () => (
-          <span className="text-sm text-gray-500 text-left">Street</span>
+          <span
+            className="text-sm text-gray-500 text-left"
+            data-cy="cusContact-table-street"
+          >
+            Street
+          </span>
         ),
       },
       {
         accessorKey: "city",
         header: () => (
-          <span className="text-sm text-gray-500 text-left">City</span>
+          <span
+            className="text-sm text-gray-500 text-left"
+            data-cy="cusContact-table-city"
+          >
+            City
+          </span>
         ),
       },
       {
         accessorKey: "state",
         header: () => (
-          <span className="text-sm text-gray-500 text-left">State</span>
+          <span
+            className="text-sm text-gray-500 text-left"
+            data-cy="cusContact-table-state"
+          >
+            State
+          </span>
         ),
       },
       {
         accessorKey: "postalCode",
         header: () => (
-          <span className="text-sm text-gray-500 text-left">Zip code</span>
+          <span
+            className="text-sm text-gray-500 text-left"
+            data-cy="cusContact-table-zipcode"
+          >
+            Zip code
+          </span>
         ),
       },
       {

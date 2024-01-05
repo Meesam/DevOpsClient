@@ -3,7 +3,7 @@ import React from "react";
 import AddCustomerContact from "./components/AddCustomerContact";
 import CustomerContacts from "./components/CustomerContacts";
 import AddCustomerBasicInfo from "./components/AddCustomerBasicInfo";
-import CustomerProvider, { useCustomer } from "../../Context/CustomerContext";
+import { useCustomer } from "../../Context/CustomerContext";
 import { TbWorldUp } from "react-icons/tb";
 
 const AddCustomer = () => {
@@ -27,11 +27,17 @@ const AddCustomer = () => {
   return (
     <form className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <h1 className="font-bold text-xl text-gray-600">Create New Customer</h1>
+        <h1
+          className="font-bold text-xl text-gray-600"
+          data-cy="create-new-customer"
+        >
+          Create New Customer
+        </h1>
         <Button
           type="button"
           onClick={handleCustomerPublish}
           disabled={!isPublishButtonActive}
+          data-cy="publish-button"
         >
           <TbWorldUp /> Publish Customer Info
         </Button>
@@ -44,7 +50,12 @@ const AddCustomer = () => {
         {/* Address info */}
         <AddCustomerContact />
       </div>
-      <h1 className="font-bold text-xl text-gray-600">Customer's Contacts</h1>
+      <h1
+        className="font-bold text-xl text-gray-600"
+        data-cy="heading-customer-contacts"
+      >
+        Customer's Contacts
+      </h1>
       {/* Contact List */}
       <CustomerContacts />
     </form>

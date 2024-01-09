@@ -1,6 +1,6 @@
 import React from "react";
 import { useCustomer } from "../../../Context/CustomerContext";
-import AppTable from "./AppTable";
+import AppTable from "./common/AppTable";
 import { SortingState } from "@tanstack/react-table";
 
 const CustomerContacts = () => {

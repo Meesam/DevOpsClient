@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProjects } from "../../Services/ProjectService";
 import LoadingBar from "react-top-loading-bar";
-import AppTable from "./components/AppTable";
+import AppTable from "./components/common/AppTable";
 import moment from "moment";
 import { Badge, Button } from "@radix-ui/themes";
 import { SortingState } from "@tanstack/react-table";

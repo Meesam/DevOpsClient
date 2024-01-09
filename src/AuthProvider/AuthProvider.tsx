@@ -1,4 +1,6 @@
+import moment from "moment";
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import { AUTHKEY } from "../Utils/app-setting";
 
 type AuthContext = {
   login: () => void;
@@ -12,10 +14,8 @@ export const AuthContext = React.createContext<AuthContext>({
   logout: () => {},
 });
 
-const IsAuthenticatedKey = "myToken";
 const AuthProvider: React.FC<any> = ({ children }: { children: any }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-
   const login = useCallback(() => {
     setIsAuthenticated(true);
   }, []);
@@ -25,7 +25,7 @@ const AuthProvider: React.FC<any> = ({ children }: { children: any }) => {
   }, []);
 
   useEffect(() => {
-    if (localStorage.getItem(IsAuthenticatedKey)) {
+    if (localStorage.getItem(AUTHKEY)) {
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);

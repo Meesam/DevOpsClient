@@ -1,5 +1,9 @@
-import { Customer } from "../../Interface";
-import { getWithToken, ResponseType } from "../../Utils/request-axios";
+import { Customer, CustomerInputRequest } from "../../Interface";
+import {
+  getWithToken,
+  postWithToken,
+  ResponseType,
+} from "../../Utils/request-axios";
 
 export const getAllCustomers = async () => {
   try {
@@ -7,5 +11,13 @@ export const getAllCustomers = async () => {
     if (resp.status === 200) return resp.data.response as Customer[];
   } catch (err) {
     console.log("err ", err);
+  }
+};
+
+export const addCustomer = async (params: CustomerInputRequest) => {
+  try {
+    await postWithToken("Customer/addCustomerContacts", params);
+  } catch (error) {
+    console.log("err ", error);
   }
 };

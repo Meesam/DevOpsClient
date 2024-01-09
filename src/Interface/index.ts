@@ -39,3 +39,8 @@ export interface Project {
   projectEndDate: Date;
   projectStatus: string;
 }
+
+export interface CustomerInputRequest {
+  customerBasicInfo: CustomerBasicInfo;
+  customerContactsInfo: CustomerContact[];
+}

@@ -1,7 +1,8 @@
 import React from "react";
 import { Column, Table as ReactTable } from "@tanstack/react-table";
-import { TextField } from "@radix-ui/themes";
+import TextField from "@mui/material/TextField";
 import { GoSearch } from "react-icons/go";
+import Box from "@mui/material/Box";
 
 interface FilterProps {
   column: Column<any, any>;
@@ -16,8 +17,8 @@ const Filter: React.FC<FilterProps> = ({ column, table }) => {
   const columnFilterValue = column.getFilterValue();
 
   return typeof firstValue === "number" ? (
-    <div className="flex space-x-2">
-      <input
+    <Box>
+      <TextField
         type="number"
         value={(columnFilterValue as [number, number])?.[0] ?? ""}
         onChange={(e) =>
@@ -29,7 +30,7 @@ const Filter: React.FC<FilterProps> = ({ column, table }) => {
         placeholder={`Min`}
         className="w-24 border shadow rounded"
       />
-      <input
+      <TextField
         type="number"
         value={(columnFilterValue as [number, number])?.[1] ?? ""}
         onChange={(e) =>
@@ -41,22 +42,16 @@ const Filter: React.FC<FilterProps> = ({ column, table }) => {
         placeholder={`Max`}
         className="w-24 border shadow rounded"
       />
-    </div>
+    </Box>
   ) : (
-    <>
-      <TextField.Root>
-        <TextField.Slot>
-          <GoSearch />
-        </TextField.Slot>
-        <TextField.Input
-          placeholder="Search..."
-          type="text"
-          value={(columnFilterValue ?? "") as string}
-          onChange={(e) => column.setFilterValue(e.target.value)}
-          className="text-sm font-normal"
-        />
-      </TextField.Root>
-    </>
+    <TextField
+      placeholder="Search..."
+      type="text"
+      value={(columnFilterValue ?? "") as string}
+      onChange={(e) => column.setFilterValue(e.target.value)}
+      size="small"
+      variant="outlined"
+    />
   );
 };
 

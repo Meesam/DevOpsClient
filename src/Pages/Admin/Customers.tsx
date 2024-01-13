@@ -5,9 +5,11 @@ import LoadingBar from "react-top-loading-bar";
 import AppTable from "./components/common/AppTable";
 import moment from "moment";
 import { SortingState } from "@tanstack/react-table";
-import { Button } from "@radix-ui/themes";
+import Button from "@mui/material/Button";
 import { IoMdAdd } from "react-icons/io";
 import { useHistory } from "react-router";
+import Paper from "@mui/material/Paper";
+import { Box, Typography } from "@mui/material";
 
 const Customers = () => {
   const ref = React.useRef<any>(null);
@@ -73,15 +75,20 @@ const Customers = () => {
   };
 
   return (
-    <div className="flex-col bg-white border rounded-md shadow-lg p-6">
-      <div className="flex justify-between items-center">
-        <span className="text-gray-800 font-semibold text-lg ">
+    <Paper sx={{ padding: 3 }}>
+      <Box className="flex justify-between items-center">
+        <Typography variant="h5" className="text-gray-800 font-semibold">
           Customer List
-        </span>
-        <Button onClick={handleAddCustomer}>
-          <IoMdAdd color="#FFFFFF" /> Add New
+        </Typography>
+        <Button
+          onClick={handleAddCustomer}
+          variant="contained"
+          color="secondary"
+          startIcon={<IoMdAdd color="#FFFFFF" />}
+        >
+          Add New
         </Button>
-      </div>
+      </Box>
 
       {customers && (
         <AppTable
@@ -91,7 +98,7 @@ const Customers = () => {
           columns={getColumn()}
         />
       )}
-    </div>
+    </Paper>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { flexRender } from "@tanstack/react-table";
-import RowAction from "../RowAction";
+import RowAction from "./RowAction";
 
 interface AppTableBodyProps {
   table: any;

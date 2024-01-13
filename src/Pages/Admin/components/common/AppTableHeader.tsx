@@ -1,7 +1,7 @@
 import React from "react";
 import { flexRender } from "@tanstack/react-table";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
-import Filter from "../Filter";
+import Filter from "./Filter";
 
 interface AppTableHeaderProps {
   table: any;

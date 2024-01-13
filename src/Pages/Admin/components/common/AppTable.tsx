@@ -11,6 +11,8 @@ import {
 import AppTablePagination from "./AppTablePagination";
 import AppTableHeader from "./AppTableHeader";
 import AppTableBody from "./AppTableBody";
+import Box from "@mui/material/Box";
+import { Paper } from "@mui/material";
 
 interface AppTableProps {
   data: any[];

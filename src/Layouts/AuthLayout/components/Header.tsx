@@ -3,6 +3,7 @@ import HeaderSearch from "./HeaderSearch";
 import ProfilePopup from "./ProfilePopup";
 import { BsChatLeftTextFill, BsPersonCircle } from "react-icons/bs";
 import { IoMdNotifications } from "react-icons/io";
+import ColorModeToggle from "./ColorModeToggle";
 
 const Header = () => {
   const [isNotificationOpen, setIsNotificationOpen] = React.useState(false);
@@ -13,6 +14,10 @@ const Header = () => {
       <div className="bg-white border-b h-16 px-4 flex justify-between items-center">
         <HeaderSearch />
         <div className="flex items-center space-x-4 relative">
+          <div className="text-xl">
+            <ColorModeToggle />
+          </div>
+
           <div className="text-xl">
             <BsChatLeftTextFill />
           </div>

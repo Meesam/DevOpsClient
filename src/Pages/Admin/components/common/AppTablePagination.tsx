@@ -1,4 +1,8 @@
-import { IconButton, Select, TextField } from "@radix-ui/themes";
+//import { IconButton, Select, TextField } from "@radix-ui/themes";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import React from "react";
 import {
   MdArrowBackIos,
@@ -6,6 +10,9 @@ import {
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 
 interface AppTablePaginationProps {
   table: any;
@@ -15,14 +22,12 @@ const AppTablePagination: React.FC<AppTablePaginationProps> = ({ table }) => {
   return (
     <div className="flex items-center gap-2">
       <IconButton
-        color="blue"
         onClick={() => table.setPageIndex(0)}
         disabled={!table.getCanPreviousPage()}
       >
         <MdKeyboardDoubleArrowLeft />
       </IconButton>
       <IconButton
-        color="blue"
         onClick={() => table.previousPage()}
         disabled={!table.getCanPreviousPage()}
       >
@@ -30,7 +35,6 @@ const AppTablePagination: React.FC<AppTablePaginationProps> = ({ table }) => {
       </IconButton>
 
       <IconButton
-        color="blue"
         onClick={() => table.nextPage()}
         disabled={!table.getCanNextPage()}
       >
@@ -38,7 +42,6 @@ const AppTablePagination: React.FC<AppTablePaginationProps> = ({ table }) => {
       </IconButton>
 
       <IconButton
-        color="blue"
         onClick={() => table.setPageIndex(table.getPageCount() - 1)}
         disabled={!table.getCanNextPage()}
       >
@@ -53,7 +56,7 @@ const AppTablePagination: React.FC<AppTablePaginationProps> = ({ table }) => {
       </span>
       <span className="flex items-center gap-1">
         | <p className=" text-sm text-gray-600">Go to page:</p>
-        <TextField.Input
+        <TextField
           type="number"
           defaultValue={table.getState().pagination.pageIndex + 1}
           onChange={(e) => {
@@ -61,18 +64,24 @@ const AppTablePagination: React.FC<AppTablePaginationProps> = ({ table }) => {
             table.setPageIndex(page);
           }}
           style={{ maxWidth: 80, minWidth: 80, width: 80 }}
+          size="small"
         />
       </span>
-      <Select.Root defaultValue="10">
-        <Select.Trigger />
-        <Select.Content position="popper">
+      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+        <InputLabel id="demo-select-small-label">Records</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          label="Age"
+          onChange={() => {}}
+        >
           {[10, 20, 30, 40, 50].map((pageSize, index) => (
-            <Select.Item value={pageSize.toString()} key={index}>
+            <MenuItem value={pageSize.toString()}>
               Show {pageSize.toString()}
-            </Select.Item>
+            </MenuItem>
           ))}
-        </Select.Content>
-      </Select.Root>
+        </Select>
+      </FormControl>
     </div>
   );
 };

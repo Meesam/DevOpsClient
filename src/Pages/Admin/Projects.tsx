@@ -4,10 +4,12 @@ import { getAllProjects } from "../../Services/ProjectService";
 import LoadingBar from "react-top-loading-bar";
 import AppTable from "./components/common/AppTable";
 import moment from "moment";
-import { Badge, Button } from "@radix-ui/themes";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import { SortingState } from "@tanstack/react-table";
 import { IoMdAdd } from "react-icons/io";
 import { useHistory } from "react-router";
+import { Box, Paper, Typography } from "@mui/material";
 
 const Projects = () => {
   const ref = React.useRef<any>(null);
@@ -75,11 +77,11 @@ const Projects = () => {
         cell: (props: any) => {
           switch (props.getValue()) {
             case "In Progress":
-              return <Badge color="orange">In progress</Badge>;
+              return <Chip label="In progress" color="primary" />;
             case "Completed":
-              return <Badge color="green">Compelted</Badge>;
+              return <Chip label="Compelted" color="success" />;
             case "New":
-              return <Badge color="blue">New</Badge>;
+              return <Chip label="New" color="secondary" />;
           }
         },
       },
@@ -95,15 +97,20 @@ const Projects = () => {
   };
 
   return (
-    <div className="flex-col bg-white border rounded-md shadow-lg p-6">
-      <div className="flex justify-between items-center">
-        <span className="text-gray-800 font-semibold text-lg ">
+    <Paper sx={{ padding: 3 }}>
+      <Box className="flex justify-between items-center">
+        <Typography variant="h5" className="text-gray-800 font-semibold">
           Project List
-        </span>
-        <Button onClick={handleAddProject}>
-          <IoMdAdd color="#FFFFFF" /> Add New
+        </Typography>
+        <Button
+          onClick={handleAddProject}
+          variant="contained"
+          color="secondary"
+          startIcon={<IoMdAdd color="#FFFFFF" />}
+        >
+          Add New
         </Button>
-      </div>
+      </Box>
       {projects && (
         <AppTable
           sorting={sorting}
@@ -112,7 +119,7 @@ const Projects = () => {
           columns={getColumn()}
         />
       )}
-    </div>
+    </Paper>
   );
 };
 

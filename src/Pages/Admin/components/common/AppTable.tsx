@@ -12,13 +12,21 @@ import AppTablePagination from "./AppTablePagination";
 import AppTableHeader from "./AppTableHeader";
 import AppTableBody from "./AppTableBody";
 import Box from "@mui/material/Box";
-import { Paper } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import TableSortLabel from "@mui/material/TableSortLabel";
 
 interface AppTableProps {
   data: any[];
   columns: ColumnDef<any>[];
   sorting: any;
   setSorting: any;
+  applyfilter: boolean;
 }
 
 const AppTable: React.FC<AppTableProps> = ({
@@ -26,6 +34,7 @@ const AppTable: React.FC<AppTableProps> = ({
   columns,
   sorting,
   setSorting,
+  applyfilter,
 }) => {
   const table = useReactTable({
     data,
@@ -42,17 +51,19 @@ const AppTable: React.FC<AppTableProps> = ({
   });
 
   return (
-    <div>
-      <div className="h-2" />
-      <table className="w-full">
-        <AppTableHeader table={table} />
-        <tbody>
-          <AppTableBody table={table} />
-        </tbody>
-      </table>
-      <div className="h-2" />
+    <Box>
+      <Box className="h-2" />
+      <TableContainer sx={{ maxHeight: 640 }}>
+        <Table stickyHeader aria-label="sticky table" className="w-full">
+          <AppTableHeader table={table} applyfilter={applyfilter} />
+          <TableBody>
+            <AppTableBody table={table} />
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Box className="h-2" />
       <AppTablePagination table={table} />
-    </div>
+    </Box>
   );
 };
 

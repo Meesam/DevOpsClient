@@ -3,19 +3,30 @@ import { flexRender } from "@tanstack/react-table";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import Filter from "./Filter";
 import { Box } from "@mui/material";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
 
 interface AppTableHeaderProps {
   table: any;
+  applyfilter: boolean;
 }
 
-const AppTableHeader: React.FC<AppTableHeaderProps> = ({ table }) => {
+const AppTableHeader: React.FC<AppTableHeaderProps> = ({
+  table,
+  applyfilter,
+}) => {
   return (
-    <thead>
+    <TableHead>
       {table.getHeaderGroups().map((headerGroup: any) => (
-        <tr key={headerGroup.id}>
+        <TableRow key={headerGroup.id}>
           {headerGroup.headers.map((header: any) => {
             return (
-              <th key={header.id} colSpan={header.colSpan} className="pb-2">
+              <TableCell
+                key={header.id}
+                align={header.numeric ? "right" : "left"}
+                padding={header.disablePadding ? "none" : "normal"}
+              >
                 {header.isPlaceholder ? null : (
                   <Box
                     className="flex flex-col space-y-2 mr-4"
@@ -32,7 +43,8 @@ const AppTableHeader: React.FC<AppTableHeaderProps> = ({ table }) => {
                       }[header.column.getIsSorted() as string] ?? null}
                     </Box>
 
-                    {header.column.getCanFilter() &&
+                    {applyfilter &&
+                    header.column.getCanFilter() &&
                     header.column.id !== "action" ? (
                       <Box>
                         <Filter column={header.column} table={table} />
@@ -40,12 +52,12 @@ const AppTableHeader: React.FC<AppTableHeaderProps> = ({ table }) => {
                     ) : null}
                   </Box>
                 )}
-              </th>
+              </TableCell>
             );
           })}
-        </tr>
+        </TableRow>
       ))}
-    </thead>
+    </TableHead>
   );
 };
 

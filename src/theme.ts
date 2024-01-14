@@ -9,6 +9,20 @@ declare module "@mui/material/styles" {
   interface SimplePaletteColorOptions {
     darker?: string;
   }
+  interface TypographyVariants {
+    tableHeading: React.CSSProperties;
+  }
+
+  interface TypographyVariantsOptions {
+    tableHeading?: React.CSSProperties;
+  }
+}
+
+// Update the Typography's variant prop options
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    tableHeading: true;
+  }
 }
 
 const secondary = {
@@ -72,5 +86,11 @@ export const getDesignTokens = (mode: PaletteMode) => ({
   },
   shape: {
     borderRadius: 4,
+  },
+  typography: {
+    tableHeading: {
+      fontWeight: "bold",
+      fontSize: "1.2em",
+    },
   },
 });

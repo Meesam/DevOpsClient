@@ -9,12 +9,14 @@ import Chip from "@mui/material/Chip";
 import { SortingState } from "@tanstack/react-table";
 import { IoMdAdd } from "react-icons/io";
 import { useHistory } from "react-router";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, IconButton, Paper, Typography } from "@mui/material";
+import { FaFilter } from "react-icons/fa";
 
 const Projects = () => {
   const ref = React.useRef<any>(null);
   const history = useHistory();
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [applyfilter, setApplyFilter] = React.useState(false);
   const { data: projects, isLoading } = useQuery({
     queryKey: ["projects"],
     queryFn: getAllProjects,
@@ -29,23 +31,29 @@ const Projects = () => {
     return [
       {
         accessorKey: "customerName",
-        header: () => <Typography>Customer</Typography>,
+        header: () => <Typography variant="tableHeading">Customer</Typography>,
       },
       {
         accessorKey: "projectName",
-        header: () => <Typography>Project</Typography>,
+        header: () => <Typography variant="tableHeading">Project</Typography>,
       },
       {
         accessorKey: "projectDescription",
-        header: () => <Typography>Description</Typography>,
+        header: () => (
+          <Typography variant="tableHeading">Description</Typography>
+        ),
       },
       {
         accessorKey: "projectType",
-        header: () => <Typography>Project Type</Typography>,
+        header: () => (
+          <Typography variant="tableHeading">Project Type</Typography>
+        ),
       },
       {
         accessorKey: "projectStartDate",
-        header: () => <Typography>Start Date</Typography>,
+        header: () => (
+          <Typography variant="tableHeading">Start Date</Typography>
+        ),
         cell: (props: any) => (
           <Typography>
             {moment(props.getValue()).format("MM-DD-YYYY")}
@@ -54,7 +62,7 @@ const Projects = () => {
       },
       {
         accessorKey: "projectEndDate",
-        header: () => <Typography>End Date</Typography>,
+        header: () => <Typography variant="tableHeading">End Date</Typography>,
         cell: (props: any) => (
           <Typography>
             {moment(props.getValue()).format("MM-DD-YYYY")}
@@ -63,7 +71,7 @@ const Projects = () => {
       },
       {
         accessorKey: "projectStatus",
-        header: () => <Typography>Status</Typography>,
+        header: () => <Typography variant="tableHeading">Status</Typography>,
         cell: (props: any) => {
           switch (props.getValue()) {
             case "In Progress":
@@ -90,14 +98,20 @@ const Projects = () => {
     <Paper sx={{ padding: 3 }}>
       <Box className="flex justify-between items-center">
         <Typography variant="h5">Project List</Typography>
-        <Button
-          onClick={handleAddProject}
-          variant="contained"
-          color="secondary"
-          startIcon={<IoMdAdd color="#FFFFFF" />}
-        >
-          Add New
-        </Button>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <IconButton onClick={() => setApplyFilter(!applyfilter)}>
+            <FaFilter />
+          </IconButton>
+
+          <Button
+            onClick={handleAddProject}
+            variant="contained"
+            color="secondary"
+            startIcon={<IoMdAdd color="#FFFFFF" />}
+          >
+            Add New
+          </Button>
+        </Box>
       </Box>
       {projects && (
         <AppTable
@@ -105,6 +119,7 @@ const Projects = () => {
           setSorting={setSorting}
           data={projects}
           columns={getColumn()}
+          applyfilter={applyfilter}
         />
       )}
     </Paper>

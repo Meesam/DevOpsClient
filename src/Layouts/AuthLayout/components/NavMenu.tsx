@@ -4,6 +4,7 @@ import BottomSideBar from "./BottomSideBar";
 import Logo from "../../../img/logo.svg";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from "react-icons/io";
 import classNames from "classnames";
+import { Avatar, Box, Divider, Paper, useTheme } from "@mui/material";
 
 const sideBarItems = [
   { title: "Dashboard", path: "/home", logo: "Dashboard" },
@@ -14,28 +15,38 @@ const sideBarItems = [
 
 const NavMenu = () => {
   const [isToggled, setIsToggled] = React.useState(false);
+  const theme = useTheme();
 
   const toggleClass = classNames({
-    "flex flex-col bg-neutral-200 p-3 border-r-1 relative duration-300": true,
+    "flex flex-col p-3 relative duration-300": true,
     "w-14": isToggled,
   });
 
   return (
-    <div className={toggleClass}>
-      <div
+    <Paper elevation={0} className={toggleClass}>
+      <Avatar
         onClick={() => setIsToggled(!isToggled)}
-        className="absolute -right-[0.7rem] top-10 flex justify-center items-center w-7 h-7 hover\:bg-gray-50 bg-sky-700 rounded-full text-white cursor-pointer"
+        sx={{
+          height: "1.7rem",
+          width: "1.7rem",
+          position: "absolute",
+          right: "-0.7rem",
+          top: 50,
+          bgcolor: theme.palette.secondary.dark,
+          cursor: "pointer",
+        }}
       >
         {isToggled ? (
           <IoIosArrowRoundForward size={25} />
         ) : (
           <IoIosArrowRoundBack size={25} />
         )}
-      </div>
+      </Avatar>
       <div className="flex items-center gap-2 px-1 py-3">
         <img src={Logo} alt="Logo" />
       </div>
-      <div className="flex-1 py-7 flex flex-col gap-1 border-t border-neutral-300">
+
+      <div className="flex-1 py-7 flex flex-col gap-1">
         {sideBarItems.map((item) => {
           return (
             <SideBarLink
@@ -46,10 +57,11 @@ const NavMenu = () => {
           );
         })}
       </div>
-      <div className="flex flex-col gap-1 pt-2 border-t border-neutral-300">
+      <Divider orientation="horizontal" />
+      <div className="flex flex-col gap-1 pt-2 ">
         <BottomSideBar isToggled={isToggled} />
       </div>
-    </div>
+    </Paper>
   );
 };
 

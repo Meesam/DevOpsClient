@@ -90,6 +90,7 @@ const CustomerContacts = () => {
           setSorting={setSorting}
           data={customerContacts}
           columns={getColumn()}
+          applyfilter={false}
         />
       )}
     </div>

@@ -9,12 +9,14 @@ import Button from "@mui/material/Button";
 import { IoMdAdd } from "react-icons/io";
 import { useHistory } from "react-router";
 import Paper from "@mui/material/Paper";
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
+import { FaFilter } from "react-icons/fa";
 
 const Customers = () => {
   const ref = React.useRef<any>(null);
   const history = useHistory();
   const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [applyfilter, setApplyFilter] = React.useState(false);
   const { data: customers, isLoading } = useQuery({
     queryKey: ["customers"],
     queryFn: getAllCustomers,
@@ -29,19 +31,21 @@ const Customers = () => {
     return [
       {
         accessorKey: "name",
-        header: () => <Typography>Name</Typography>,
+        header: () => <Typography variant="tableHeading">Name</Typography>,
       },
       {
         accessorKey: "website",
-        header: () => <Typography>Website</Typography>,
+        header: () => <Typography variant="tableHeading">Website</Typography>,
       },
       {
         accessorKey: "logoUrl",
-        header: () => <Typography>Logo</Typography>,
+        header: () => <Typography variant="tableHeading">Logo</Typography>,
       },
       {
         accessorKey: "createdDate",
-        header: () => <Typography>Created Date</Typography>,
+        header: () => (
+          <Typography variant="tableHeading">Created Date</Typography>
+        ),
         cell: (props: any) => (
           <Typography>
             {moment(props.getValue()).format("MM-DD-YYYY")}
@@ -50,7 +54,9 @@ const Customers = () => {
       },
       {
         accessorKey: "updatedDate",
-        header: () => <Typography>Updated Date</Typography>,
+        header: () => (
+          <Typography variant="tableHeading">Updated Date</Typography>
+        ),
         cell: (props: any) => (
           <Typography>
             {moment(props.getValue()).format("MM-DD-YYYY")}
@@ -72,14 +78,20 @@ const Customers = () => {
     <Paper sx={{ padding: 3 }}>
       <Box className="flex justify-between items-center">
         <Typography variant="h5">Customer List</Typography>
-        <Button
-          onClick={handleAddCustomer}
-          variant="contained"
-          color="secondary"
-          startIcon={<IoMdAdd color="#FFFFFF" />}
-        >
-          Add New
-        </Button>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <IconButton onClick={() => setApplyFilter(!applyfilter)}>
+            <FaFilter />
+          </IconButton>
+
+          <Button
+            onClick={handleAddCustomer}
+            variant="contained"
+            color="secondary"
+            startIcon={<IoMdAdd color="#FFFFFF" />}
+          >
+            Add New
+          </Button>
+        </Box>
       </Box>
 
       {customers && (
@@ -88,6 +100,7 @@ const Customers = () => {
           setSorting={setSorting}
           data={customers}
           columns={getColumn()}
+          applyfilter={applyfilter}
         />
       )}
     </Paper>

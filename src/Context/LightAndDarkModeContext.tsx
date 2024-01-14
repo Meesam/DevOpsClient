@@ -2,17 +2,17 @@ import { PaletteMode } from "@mui/material";
 import React from "react";
 
 export interface ColorModeContextProps {
-  mode: PaletteMode | null | undefined;
+  mode: PaletteMode;
   toggleColorMode: (val: PaletteMode) => void;
 }
 
 export const ColorModeContext = React.createContext<ColorModeContextProps>({
-  mode: null,
+  mode: "light",
   toggleColorMode: () => {},
 });
 
 const ColorModeProvider: React.FC<any> = ({ children }: { children: any }) => {
-  const [mode, setColorMode] = React.useState<any>();
+  const [mode, setColorMode] = React.useState<PaletteMode>("light");
 
   const toggleColorMode = React.useCallback(
     (val: PaletteMode) => {

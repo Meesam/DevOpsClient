@@ -1,5 +1,5 @@
-import { createTheme } from "@mui/material/styles";
 import { blue, grey, green, red } from "@mui/material/colors";
+import { PaletteMode } from "@mui/material";
 
 declare module "@mui/material/styles" {
   interface PaletteColor {
@@ -48,14 +48,27 @@ const error = {
   contrastText: "#FFFFFF",
 };
 
-export const theme = createTheme({
+export const getDesignTokens = (mode: PaletteMode) => ({
   palette: {
-    contrastThreshold: 4.5,
-    primary,
-    secondary,
-    info,
-    success,
-    error,
+    mode,
+    ...(mode === "light"
+      ? {
+          contrastThreshold: 4.5,
+          primary,
+          secondary,
+          info,
+          success,
+          error,
+        }
+      : {
+          // palette values for dark mode
+          contrastThreshold: 4.5,
+          primary,
+          secondary,
+          info,
+          success,
+          error,
+        }),
   },
   shape: {
     borderRadius: 4,

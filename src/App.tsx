@@ -3,23 +3,23 @@ import AuthProvider from "./AuthProvider/AuthProvider";
 import Router from "./routes/Router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { ThemeProvider, useTheme } from "@mui/material/styles";
-import { theme } from "./theme";
+import { useColorMode } from "./Context/LightAndDarkModeContext";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { getDesignTokens } from "./theme";
 import ColorModeProvider from "./Context/LightAndDarkModeContext";
 
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
-  //const theme = useTheme();
+  const { mode } = useColorMode();
+  const theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
 
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <ColorModeProvider>
-          <ThemeProvider theme={theme}>
-            <Router />
-          </ThemeProvider>
-        </ColorModeProvider>
+        <ThemeProvider theme={theme}>
+          <Router />
+        </ThemeProvider>
       </AuthProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

@@ -29,43 +29,37 @@ const Customers = () => {
     return [
       {
         accessorKey: "name",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Name</span>
-        ),
+        header: () => <Typography>Name</Typography>,
       },
       {
         accessorKey: "website",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Website</span>
-        ),
+        header: () => <Typography>Website</Typography>,
       },
       {
         accessorKey: "logoUrl",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Logo</span>
-        ),
+        header: () => <Typography>Logo</Typography>,
       },
       {
         accessorKey: "createdDate",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Created Date</span>
-        ),
+        header: () => <Typography>Created Date</Typography>,
         cell: (props: any) => (
-          <span>{moment(props.getValue()).format("MM-DD-YYYY")}</span>
+          <Typography>
+            {moment(props.getValue()).format("MM-DD-YYYY")}
+          </Typography>
         ),
       },
       {
         accessorKey: "updatedDate",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Updated Date</span>
-        ),
+        header: () => <Typography>Updated Date</Typography>,
         cell: (props: any) => (
-          <span>{moment(props.getValue()).format("MM-DD-YYYY")}</span>
+          <Typography>
+            {moment(props.getValue()).format("MM-DD-YYYY")}
+          </Typography>
         ),
       },
       {
         accessorKey: "action",
-        header: () => <span className="text-sm text-gray-500 text-left"></span>,
+        header: () => <Typography></Typography>,
       },
     ];
   };
@@ -77,9 +71,7 @@ const Customers = () => {
   return (
     <Paper sx={{ padding: 3 }}>
       <Box className="flex justify-between items-center">
-        <Typography variant="h5" className="text-gray-800 font-semibold">
-          Customer List
-        </Typography>
+        <Typography variant="h5">Customer List</Typography>
         <Button
           onClick={handleAddCustomer}
           variant="contained"

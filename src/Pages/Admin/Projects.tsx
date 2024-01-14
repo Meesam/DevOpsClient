@@ -29,51 +29,41 @@ const Projects = () => {
     return [
       {
         accessorKey: "customerName",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Customer</span>
-        ),
+        header: () => <Typography>Customer</Typography>,
       },
       {
         accessorKey: "projectName",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Project</span>
-        ),
+        header: () => <Typography>Project</Typography>,
       },
       {
         accessorKey: "projectDescription",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Description</span>
-        ),
+        header: () => <Typography>Description</Typography>,
       },
       {
         accessorKey: "projectType",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Project Type</span>
-        ),
+        header: () => <Typography>Project Type</Typography>,
       },
       {
         accessorKey: "projectStartDate",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Start Date</span>
-        ),
+        header: () => <Typography>Start Date</Typography>,
         cell: (props: any) => (
-          <span>{moment(props.getValue()).format("MM-DD-YYYY")}</span>
+          <Typography>
+            {moment(props.getValue()).format("MM-DD-YYYY")}
+          </Typography>
         ),
       },
       {
         accessorKey: "projectEndDate",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">End Date</span>
-        ),
+        header: () => <Typography>End Date</Typography>,
         cell: (props: any) => (
-          <span>{moment(props.getValue()).format("MM-DD-YYYY")}</span>
+          <Typography>
+            {moment(props.getValue()).format("MM-DD-YYYY")}
+          </Typography>
         ),
       },
       {
         accessorKey: "projectStatus",
-        header: () => (
-          <span className="text-sm text-gray-500 text-left">Status</span>
-        ),
+        header: () => <Typography>Status</Typography>,
         cell: (props: any) => {
           switch (props.getValue()) {
             case "In Progress":
@@ -87,7 +77,7 @@ const Projects = () => {
       },
       {
         accessorKey: "action",
-        header: () => <span className="text-sm text-gray-500 text-left"></span>,
+        header: () => <Typography></Typography>,
       },
     ];
   };
@@ -99,9 +89,7 @@ const Projects = () => {
   return (
     <Paper sx={{ padding: 3 }}>
       <Box className="flex justify-between items-center">
-        <Typography variant="h5" className="text-gray-800 font-semibold">
-          Project List
-        </Typography>
+        <Typography variant="h5">Project List</Typography>
         <Button
           onClick={handleAddProject}
           variant="contained"

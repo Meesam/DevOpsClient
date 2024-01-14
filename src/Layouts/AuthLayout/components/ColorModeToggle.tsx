@@ -1,14 +1,10 @@
-import { useTheme } from "@mui/material/styles";
 import React from "react";
-import {
-  ColorModeContext,
-  useColorMode,
-} from "../../../Context/LightAndDarkModeContext";
+import { useColorMode } from "../../../Context/LightAndDarkModeContext";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import { theme } from "../../../theme";
 
 import { MdOutlineLightMode, MdLightMode } from "react-icons/md";
+import { Tooltip } from "@mui/material";
 
 const ColorModeToggle = () => {
   const { mode, toggleColorMode } = useColorMode();
@@ -17,15 +13,15 @@ const ColorModeToggle = () => {
     toggleColorMode(mode === "dark" ? "light" : "dark");
   }, [mode]);
 
-  React.useEffect(() => {
-    theme.palette.mode = mode === "dark" ? "light" : "dark";
-  }, [mode]);
-
   return (
     <Box>
-      <IconButton sx={{ ml: 1 }} onClick={handleClick} color="inherit">
-        {mode === "dark" ? <MdOutlineLightMode /> : <MdLightMode />}
-      </IconButton>
+      <Tooltip
+        title={mode === "dark" ? "Toggle to light mode" : "Toggle to dark mode"}
+      >
+        <IconButton sx={{ ml: 1 }} onClick={handleClick} color="inherit">
+          {mode === "dark" ? <MdOutlineLightMode /> : <MdLightMode />}
+        </IconButton>
+      </Tooltip>
     </Box>
   );
 };

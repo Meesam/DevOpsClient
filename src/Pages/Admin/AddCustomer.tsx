@@ -1,4 +1,3 @@
-import { Button } from "@radix-ui/themes";
 import React from "react";
 import AddCustomerContact from "./components/AddCustomerContact";
 import CustomerContacts from "./components/CustomerContacts";
@@ -8,27 +7,30 @@ import { TbWorldUp } from "react-icons/tb";
 import { addCustomer } from "../../Services/CustomerService";
 import { useMutation } from "@tanstack/react-query";
 import { CustomerInputRequest } from "../../Interface";
-import { ToastContainer, toast } from "react-toastify";
+import { Paper, Button, Typography, Box, Grid, Snackbar } from "@mui/material";
 
 const AddCustomer = () => {
   const { customerBasicInfo, customerContacts } = useCustomer();
+  const [open, setOpen] = React.useState(false);
   const [isPublishButtonActive, setPublishButtonActive] = React.useState(false);
   const { status, error, mutate } = useMutation({
     mutationFn: addCustomer,
     mutationKey: ["add-customer"],
     onSuccess: () => {
-      toast.success("Customer added Successfully", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      setOpen(true);
     },
   });
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const handleCustomerPublish = React.useCallback(() => {
     if (customerBasicInfo && customerContacts.length > 0) {
@@ -50,37 +52,42 @@ const AddCustomer = () => {
 
   return (
     <form className="flex flex-col gap-4">
-      <ToastContainer />
-      <div className="flex justify-between items-center">
-        <h1
-          className="font-bold text-xl text-gray-600"
-          data-cy="create-new-customer"
-        >
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Customer added successfully"
+      />
+      <Box className="flex justify-between items-center">
+        <Typography data-cy="create-new-customer" variant="h5">
           Create New Customer
-        </h1>
+        </Typography>
         <Button
           type="button"
           onClick={handleCustomerPublish}
           disabled={!isPublishButtonActive || status === "pending"}
           data-cy="publish-button"
+          color="secondary"
+          startIcon={<TbWorldUp />}
+          variant="contained"
         >
-          <TbWorldUp /> Publish Customer Info
+          Publish Customer Info
         </Button>
-      </div>
+      </Box>
 
-      <div className="flex gap-4">
-        {/* Basic info */}
-        <AddCustomerBasicInfo />
-
-        {/* Address info */}
-        <AddCustomerContact />
-      </div>
-      <h1
-        className="font-bold text-xl text-gray-600"
-        data-cy="heading-customer-contacts"
-      >
+      <Box>
+        <Grid container spacing={2}>
+          <Grid item lg={6} md={12} sm={12} xs={12}>
+            <AddCustomerBasicInfo />
+          </Grid>
+          <Grid item lg={6} md={12} sm={12} xs={12}>
+            <AddCustomerContact />
+          </Grid>
+        </Grid>
+      </Box>
+      <Typography variant="h5" data-cy="heading-customer-contacts">
         Customer's Contacts
-      </h1>
+      </Typography>
       {/* Contact List */}
       <CustomerContacts />
     </form>

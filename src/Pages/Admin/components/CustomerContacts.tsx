@@ -2,6 +2,7 @@ import React from "react";
 import { useCustomer } from "../../../Context/CustomerContext";
 import AppTable from "./common/AppTable";
 import { SortingState } from "@tanstack/react-table";
+import { Paper, Typography } from "@mui/material";
 
 const CustomerContacts = () => {
   const { customerContacts } = useCustomer();
@@ -12,78 +13,60 @@ const CustomerContacts = () => {
       {
         accessorKey: "phone",
         header: () => (
-          <span
-            className="text-sm text-gray-500 text-left"
-            data-cy="cusContact-table-phone"
-          >
+          <Typography variant="tableHeading" data-cy="cusContact-table-phone">
             Phone
-          </span>
+          </Typography>
         ),
       },
       {
         accessorKey: "email",
         header: () => (
-          <span
-            className="text-sm text-gray-500 text-left"
-            data-cy="cusContact-table-email"
-          >
+          <Typography variant="tableHeading" data-cy="cusContact-table-email">
             Email
-          </span>
+          </Typography>
         ),
       },
       {
         accessorKey: "street",
         header: () => (
-          <span
-            className="text-sm text-gray-500 text-left"
-            data-cy="cusContact-table-street"
-          >
+          <Typography variant="tableHeading" data-cy="cusContact-table-street">
             Street
-          </span>
+          </Typography>
         ),
       },
       {
         accessorKey: "city",
         header: () => (
-          <span
-            className="text-sm text-gray-500 text-left"
-            data-cy="cusContact-table-city"
-          >
+          <Typography variant="tableHeading" data-cy="cusContact-table-city">
             City
-          </span>
+          </Typography>
         ),
       },
       {
         accessorKey: "state",
         header: () => (
-          <span
-            className="text-sm text-gray-500 text-left"
-            data-cy="cusContact-table-state"
-          >
+          <Typography variant="tableHeading" data-cy="cusContact-table-state">
             State
-          </span>
+          </Typography>
         ),
       },
       {
         accessorKey: "postalCode",
         header: () => (
-          <span
-            className="text-sm text-gray-500 text-left"
-            data-cy="cusContact-table-zipcode"
-          >
+          <Typography variant="tableHeading" data-cy="cusContact-table-zipcode">
             Zip code
-          </span>
+          </Typography>
         ),
       },
       {
         accessorKey: "action",
-        header: () => <span className="text-sm text-gray-500 text-left"></span>,
+        header: () => <Typography></Typography>,
       },
     ];
   };
 
   return (
-    <div className="flex-col bg-white border rounded-md shadow-lg p-6">
+    <Paper className="p-6">
       {customerContacts && customerContacts.length > 0 && (
         <AppTable
           sorting={sorting}
@@ -93,7 +76,7 @@ const CustomerContacts = () => {
           applyfilter={false}
         />
       )}
-    </div>
+    </Paper>
   );
 };
 

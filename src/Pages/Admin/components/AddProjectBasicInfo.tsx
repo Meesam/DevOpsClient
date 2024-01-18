@@ -92,13 +92,13 @@ const AddProjectBasicInfo = () => {
               id="projectType-select"
               label="Project Type"
               variant="outlined"
-              defaultValue="New"
+              defaultValue="Financial"
               {...register("projectType")}
             >
-              <MenuItem value="New">New</MenuItem>
-              <MenuItem value="In Progress">In Progress</MenuItem>
-              <MenuItem value="Done">Done</MenuItem>
-              <MenuItem value="Close">Close</MenuItem>
+              <MenuItem value="Shopping Cart">Shopping Cart</MenuItem>
+              <MenuItem value="IT Industry">IT Industry</MenuItem>
+              <MenuItem value="Financial">Financial</MenuItem>
+              <MenuItem value="AI Based">AI Based</MenuItem>
             </Select>
             {errors.projectType && (
               <span
@@ -146,6 +146,29 @@ const AddProjectBasicInfo = () => {
                 data-cy="projectEndDate-error"
               >
                 {errors.projectEndDate.message}
+              </span>
+            )}
+          </Box>
+          <Box className="flex flex-col gap-1">
+            <Select
+              data-cy="projectStatus-input"
+              id="projectStatus-select"
+              label="Project Status"
+              variant="outlined"
+              defaultValue="New"
+              {...register("projectStatus")}
+            >
+              <MenuItem value="New">New</MenuItem>
+              <MenuItem value="In Progress">In Progress</MenuItem>
+              <MenuItem value="Done">Done</MenuItem>
+              <MenuItem value="Close">Close</MenuItem>
+            </Select>
+            {errors.projectStatus && (
+              <span
+                className="text-xs text-red-500"
+                data-cy="projectStatus-error"
+              >
+                {errors.projectStatus.message}
               </span>
             )}
           </Box>

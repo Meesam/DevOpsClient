@@ -28,7 +28,7 @@ export const projectSchema: ZodType<Partial<Project>> = z.object({
   projectName: z.string().min(4).max(50),
   projectType: z.string().min(4).max(20),
   projectStartDate: z.coerce.date(),
-  projectEndDate: z.coerce.date().nullable().unwrap(),
-  projectDescription: z.string().nullable().unwrap(),
-  projectStatus: z.string().min(2).max(20),
+  projectEndDate: z.coerce.date(),
+  projectDescription: z.string(),
+  projectStatus: z.string(),
 });

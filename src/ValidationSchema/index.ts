@@ -1,5 +1,5 @@
-import { ZodType, boolean, z } from "zod";
-import { CustomerBasicInfo, CustomerContact } from "../Interface";
+import { ZodType, boolean, string, z } from "zod";
+import { CustomerBasicInfo, CustomerContact, Project } from "../Interface";
 
 export const customerBasicInfoSchema: ZodType<Partial<CustomerBasicInfo>> =
   z.object({
@@ -22,3 +22,13 @@ export const customerContactsSchema: ZodType<Partial<CustomerContact>> =
     state: z.string().min(2).max(20),
     postalCode: z.string().min(4).max(10),
   });
+
+export const projectSchema: ZodType<Partial<Project>> = z.object({
+  customerName: z.string().min(1),
+  projectName: z.string().min(4).max(50),
+  projectType: z.string().min(4).max(20),
+  projectStartDate: z.coerce.date(),
+  projectEndDate: z.coerce.date().nullable().unwrap(),
+  projectDescription: z.string().nullable().unwrap(),
+  projectStatus: z.string().min(2).max(20),
+});

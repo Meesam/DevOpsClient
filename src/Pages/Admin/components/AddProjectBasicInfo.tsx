@@ -5,6 +5,9 @@ import {
   Paper,
   Typography,
   Autocomplete,
+  Select,
+  MenuItem,
+  InputLabel,
 } from "@mui/material";
 import React from "react";
 import { CustomerBasicInfo, Project } from "../../../Interface";
@@ -12,12 +15,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaSave } from "react-icons/fa";
 import { useCustomer } from "../../../Context/CustomerContext";
-import { customerBasicInfoSchema } from "../../../ValidationSchema";
+import { projectSchema } from "../../../ValidationSchema";
 import { useQuery } from "@tanstack/react-query";
 import { getAllCustomers } from "../../../Services/CustomerService";
 
 const AddProjectBasicInfo = () => {
-  const { addCustomerBasicInfo } = useCustomer();
   const { data: customers } = useQuery({
     queryKey: ["customers"],
     queryFn: getAllCustomers,
@@ -28,102 +30,159 @@ const AddProjectBasicInfo = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<Partial<Project>>({
-    resolver: zodResolver(customerBasicInfoSchema),
+    resolver: zodResolver(projectSchema),
   });
 
-  const addBasicDetail = (data: CustomerBasicInfo) => {
-    addCustomerBasicInfo(data);
+  const addBasicDetail = (data: Partial<Project>) => {
+    //addCustomerBasicInfo(data);
+
+    console.log("data ", data);
   };
 
   return (
     <Paper>
-      <Box className="flex flex-col gap-4 h-auto p-5">
-        <Typography variant="h6">Basic Info</Typography>
-        <Box className="flex flex-col gap-1">
-          <Autocomplete
-            id="customer-select-"
-            options={customers || []}
-            autoHighlight
-            getOptionLabel={(option) => option.name}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Select Customer"
-                inputProps={{
-                  ...params.inputProps,
-                }}
-                {...register("customerName")}
-              />
+      <form>
+        <Box className="flex flex-col gap-4 h-auto p-5">
+          <Typography variant="h6">Basic Info</Typography>
+          <Box className="flex flex-col gap-1">
+            <Autocomplete
+              id="customer-select-"
+              options={customers || []}
+              autoHighlight
+              getOptionLabel={(option) => option.name}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Select Customer"
+                  inputProps={{
+                    ...params.inputProps,
+                  }}
+                  {...register("customerName")}
+                />
+              )}
+            />
+            {errors.customerName && (
+              <span className="text-xs text-red-500" data-cy="name-error">
+                {errors.customerName.message}
+              </span>
             )}
-          />
-          {errors.customerName && (
-            <span className="text-xs text-red-500" data-cy="name-error">
-              {errors.customerName.message}
-            </span>
-          )}
-        </Box>
-        <Box className="flex flex-col gap-1">
-          <TextField
-            type="text"
-            id="website"
-            placeholder="Enter website name"
-            {...register("website")}
-            data-cy="website-input"
-            label="Website"
-            variant="outlined"
-          />
-          {errors.website && (
-            <span className="text-xs text-red-500" data-cy="website-error">
-              {errors.website.message}
-            </span>
-          )}
-        </Box>
-        <Box className="flex flex-col gap-1">
-          <TextField
-            type="text"
-            id="logoUrl"
-            placeholder="Enter logo url"
-            {...register("logoUrl")}
-            data-cy="LogoUrl-input"
-            label="LogoUrl"
-            variant="outlined"
-          />
-          {errors.logoUrl && (
-            <span className="text-xs text-red-500" data-cy="logoUrl-error">
-              {errors.logoUrl.message}
-            </span>
-          )}
-        </Box>
-        <Box className="flex flex-col gap-1">
-          <TextField
-            id="description"
-            placeholder="Description"
-            {...register("description")}
-            data-cy="Description-input"
-            label="Description"
-            variant="outlined"
-          />
-          {errors.description && (
-            <span className="text-xs text-red-500" data-cy="description-error">
-              {errors.description.message}
-            </span>
-          )}
-        </Box>
-        <Box className="flex flex-col gap-1 items-end">
-          <Box className="w-auto">
-            <Button
-              type="button"
-              onClick={handleSubmit(addBasicDetail)}
-              data-cy="addContact-button"
-              startIcon={<FaSave />}
-              variant="contained"
-              color="secondary"
+          </Box>
+          <Box className="flex flex-col gap-1">
+            <TextField
+              type="text"
+              id="projectName"
+              placeholder="Enter project name"
+              {...register("projectName")}
+              data-cy="projectName-input"
+              label="Project Name"
+              variant="outlined"
+            />
+            {errors.projectName && (
+              <span
+                className="text-xs text-red-500"
+                data-cy="projectName-error"
+              >
+                {errors.projectName.message}
+              </span>
+            )}
+          </Box>
+          <Box className="flex flex-col gap-1">
+            <Select
+              data-cy="projectType-input"
+              id="projectType-select"
+              label="Project Type"
+              variant="outlined"
+              defaultValue="New"
+              {...register("projectType")}
             >
-              Save
-            </Button>
+              <MenuItem value="New">New</MenuItem>
+              <MenuItem value="In Progress">In Progress</MenuItem>
+              <MenuItem value="Done">Done</MenuItem>
+              <MenuItem value="Close">Close</MenuItem>
+            </Select>
+            {errors.projectType && (
+              <span
+                className="text-xs text-red-500"
+                data-cy="projectType-error"
+              >
+                {errors.projectType.message}
+              </span>
+            )}
+          </Box>
+          <Box className="flex flex-col gap-1">
+            <TextField
+              type="date"
+              id="projectStartDate"
+              placeholder="projectStartDate"
+              {...register("projectStartDate")}
+              data-cy="projectStartDate-input"
+              label="Start Date"
+              variant="outlined"
+              defaultValue=""
+            />
+            {errors.projectStartDate && (
+              <span
+                className="text-xs text-red-500"
+                data-cy="projectStartDate-error"
+              >
+                {errors.projectStartDate.message}
+              </span>
+            )}
+          </Box>
+          <Box className="flex flex-col gap-1">
+            <TextField
+              type="date"
+              id="projectEndDate"
+              placeholder="projectEndDate"
+              {...register("projectEndDate")}
+              data-cy="projectEndDate-input"
+              label="End Date"
+              variant="outlined"
+              defaultValue=""
+            />
+            {errors.projectEndDate && (
+              <span
+                className="text-xs text-red-500"
+                data-cy="projectEndDate-error"
+              >
+                {errors.projectEndDate.message}
+              </span>
+            )}
+          </Box>
+          <Box className="flex flex-col gap-1">
+            <TextField
+              id="projectDescription"
+              placeholder="projectDescription"
+              {...register("projectDescription")}
+              data-cy="projectDescription-input"
+              label="Description"
+              variant="outlined"
+            />
+            {errors.projectDescription && (
+              <span
+                className="text-xs text-red-500"
+                data-cy="projectDescription-error"
+              >
+                {errors.projectDescription.message}
+              </span>
+            )}
+          </Box>
+          <Box className="flex flex-col gap-1 items-end">
+            <Box className="w-auto">
+              <Button
+                type="button"
+                data-cy="addProject-button"
+                startIcon={<FaSave />}
+                variant="contained"
+                color="secondary"
+                onClick={handleSubmit(addBasicDetail)}
+              >
+                Save
+              </Button>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      </form>
     </Paper>
   );
 };
